@@ -33,8 +33,8 @@ public class PathOfDestructionGrader {
 
         // Test for valid boards across all input files.
         for (int test = 1; test <= TESTS; test++) {
-            String input = String.format("Criteria/Criteria%d.txt", test);
-            String message = String.format("isValidBoard(Criteria%d)", test);
+            String input = String.format("Inputs/Input%d.txt", test);
+            String message = String.format("isValidBoard(Input%d)", test);
 
             try {
                 if (PathOfDestruction.isValidBoard(input) == validBoards.contains(test)) {
@@ -55,8 +55,8 @@ public class PathOfDestructionGrader {
         
         // Test for valid paths across all input files.
         for (int test = 1; test <= TESTS; test++) {
-            String input = String.format("Criteria/Criteria%d.txt", test);
-            String message = String.format("hasPathOfDestruction(Criteria%d)", test);
+            String input = String.format("Inputs/Input%d.txt", test);
+            String message = String.format("hasPathOfDestruction(Input%d)", test);
           
             try {
                 if (PathOfDestruction.hasPathOfDestruction(input) == validPaths.contains(test)) {
