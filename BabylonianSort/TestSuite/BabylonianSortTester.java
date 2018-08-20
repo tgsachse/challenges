@@ -3,6 +3,7 @@
 //      javac BabylonianSort.java BabylonianSortTester.java
 //      java BabylonianSortTester
 
+import java.io.*;
 import java.util.*;
 import java.util.Map.*;
 
@@ -25,6 +26,7 @@ public class BabylonianSortTester {
         passed++;
     }
 
+    // Print the final report.
     private static void printFinalReport() {
         System.out.printf("\nTests passed: %d\n", passed);
         System.out.printf("Tests failed: %d\n", failed);
@@ -41,6 +43,7 @@ public class BabylonianSortTester {
         }
     }
 
+    // Test conversion of decimal longs to sexagesimal strings.
     private static void testDecimalToSexagesimal() {
         HashMap<Integer, String> tests = new HashMap<>();
         tests.put(0, "0");
@@ -67,6 +70,7 @@ public class BabylonianSortTester {
         }
     }
 
+    // Test conversion of sexagesimal strings to decimal longs.
     private static void testSexagesimalToDecimal() {
         HashMap<String, Integer> tests = new HashMap<>();
         tests.put("0", 0);
@@ -93,6 +97,7 @@ public class BabylonianSortTester {
         }
     }
 
+    // Test that the proper error is thrown when given an invalid sexagesimal string.
     private static void testInvalidSexagesimalToDecimal() {
         String message = String.format("sexagesimalToDecimal(\"12aZ\")");
 
@@ -100,6 +105,7 @@ public class BabylonianSortTester {
             BabylonianSort.sexagesimalToDecimal("12aZ");
             fail(message + " **error expected**");
         }
+        // This will catch the expected NumberFormatException and pass the case.
         catch (NumberFormatException e) {
             pass(message);
         }
@@ -108,6 +114,7 @@ public class BabylonianSortTester {
         }
     }
 
+    // Test that the submission recognizes valid sexagesimal strings.
     private static void testValidSexagesimalNumbers() {
         String[] validNumbers = {
             "17bbxX",
@@ -132,6 +139,7 @@ public class BabylonianSortTester {
         }
     }
 
+    // Test that the submission recognizes invalid sexagesimal strings.
     private static void testInvalidSexagesimalNumbers() {
         String[] invalidNumbers = {
             "-1",
@@ -155,7 +163,40 @@ public class BabylonianSortTester {
         }
     }
 
-    public static void main(String[] args) {
+    private static void testBabylonianSort() throws IOException {
+        for (int test = 1; test <= 1; test++) {
+            Scanner inScanner = new Scanner(new File(String.format("Inputs/Input%d.txt", test)));
+            String[] numbers = new String[inScanner.nextInt()];
+
+            inScanner.nextLine();
+            for (int index = 0; index < numbers.length; index++) {
+                numbers[index] = inScanner.nextLine();
+            }
+
+            String message = String.format("babylonianSort(Inputs/Input%d.txt)", test);
+            try {
+                BabylonianSort.babylonianSort(numbers);
+            }
+            catch (Exception e) {
+                fail(message + " **program crashed**");
+            }
+
+            boolean successful = true;
+            Scanner outScanner = new Scanner(new File(String.format("Outputs/Output%d.txt", test)));
+            for (int index = 0; index < numbers.length; index++) {
+                if (!numbers[index].equals(outScanner.nextLine())) {
+                    fail(message + " **output mismatch**");
+                    successful = false;
+                } 
+            }
+            if (successful) {
+                pass(message);
+            }
+        }
+    }
+
+    // Main entry point of the test class.
+    public static void main(String[] args) throws IOException {
         System.out.println("Results:");
         System.out.println("=========================================================");
 
@@ -164,6 +205,7 @@ public class BabylonianSortTester {
         testInvalidSexagesimalToDecimal();
         testValidSexagesimalNumbers();
         testInvalidSexagesimalNumbers();
+        testBabylonianSort();
 
         printFinalReport();
     }
