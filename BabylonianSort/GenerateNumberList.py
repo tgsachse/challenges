@@ -1,3 +1,4 @@
+#! /usr/bin/python3
 # Generate long lists of random sexagesimal numbers.
 # Written by Tiger Sachse.
 
