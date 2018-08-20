@@ -1,4 +1,6 @@
 #! /usr/bin/python3
+# Generate a large checkerboard with evenly spaced checkers.
+# Written by Tiger Sachse.
 
 import random
 

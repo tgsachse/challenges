@@ -1,5 +1,5 @@
 // Test class for PathOfDestruction.
-// Written by T. S.
+// Written by Tiger Sachse.
 // To use, compile and run your program like this:
 //     javac PathOfDestruction.java PathOfDestructionTester.java
 //     java PathOfDestructionTester

@@ -4,7 +4,7 @@
 
 # You will need to make sure your directory looks like
 # the directory described in the PDF, section 6.
-# Written by T.S.
+# Written by Tiger Sachse.
 
 MAX_INPUTS=8
 MALFUNCTION=false

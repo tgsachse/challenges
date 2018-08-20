@@ -1,5 +1,5 @@
 // Grader for the PathOfDestruction assignment.
-// By Tiger Sachse.
+// Written by Tiger Sachse.
 
 import java.util.*;
 
