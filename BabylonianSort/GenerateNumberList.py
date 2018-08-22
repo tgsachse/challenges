@@ -4,8 +4,8 @@
 
 import random
 
-NUMBER_COUNT = 10
-NUMBER_WIDTH = 15
+NUMBER_COUNT = 100
+NUMBER_WIDTH = 30
 VALID_CHARACTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX"
 
 with open("output.txt", "w") as f:

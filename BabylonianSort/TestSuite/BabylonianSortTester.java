@@ -12,7 +12,7 @@ public class BabylonianSortTester {
 
     private static int passed = 0;
     private static int failed = 0;
-    private static final int INPUTS = 3;
+    private static final int INPUTS = 4;
 
     // Print a failure message and increment the failed counter.
     private static void fail(String message) {
@@ -187,6 +187,10 @@ public class BabylonianSortTester {
             }
             catch (Exception e) {
                 fail(message + " **program crashed**");
+            }
+
+            for (int index = 0; index < numbers.length; index++) {
+                System.out.println(numbers[index]);
             }
 
             boolean successful = true;
