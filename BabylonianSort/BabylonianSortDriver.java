@@ -20,6 +20,8 @@ class BabylonianSortDriver {
             numbers[index] = scanner.nextLine();
         }
 
+        scanner.close();
+
         // Run BabylonianSort in place on the array.
         BabylonianSort.babylonianSort(numbers);
 
