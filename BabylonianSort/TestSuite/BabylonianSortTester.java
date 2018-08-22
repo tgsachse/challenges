@@ -189,10 +189,6 @@ public class BabylonianSortTester {
                 fail(message + " **program crashed**");
             }
 
-            for (int index = 0; index < numbers.length; index++) {
-                System.out.println(numbers[index]);
-            }
-
             boolean successful = true;
             Scanner outScanner = new Scanner(new File(String.format("Outputs/Output%d.txt", input)));
             // Compare the numbers array to the expected output file. The output

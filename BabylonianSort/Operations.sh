@@ -42,6 +42,14 @@ function generateInput {
     python3 GenerateNumberList.py
 }
 
+function sortInput {
+    cp ../Solutions/$ASSIGNMENT.java .
+    javac $ASSIGNMENT.java ${ASSIGNMENT}Driver.java
+    java ${ASSIGNMENT}Driver $1
+    rm $ASSIGNMENT.java
+    rm *.class
+}
+
 # Read the arguments and act accordingly.
 case $1 in
     "--test")
@@ -55,5 +63,8 @@ case $1 in
         ;;
     "--gen")
         generateInput
+        ;;
+    "--sort")
+        sortInput $2
         ;;
 esac
