@@ -1,4 +1,5 @@
 // Tester for BabylonianSort, written by Tiger Sachse.
+
 // To use, compile and run your program with these commands:
 //      javac BabylonianSort.java BabylonianSortTester.java
 //      java BabylonianSortTester
@@ -49,8 +50,8 @@ public class BabylonianSortTester {
         tests.put(0, "0");
         tests.put(7, "7");
         tests.put(59, "X");
-        tests.put(1337, "mh");//confirm
-        tests.put(100000, "rKE");//confirm
+        tests.put(1337, "mh");
+        tests.put(100000, "rKE");
 
         for (Entry<Integer, String> test : tests.entrySet()) {
             String result = BabylonianSort.decimalToSexagesimal(test.getKey());
