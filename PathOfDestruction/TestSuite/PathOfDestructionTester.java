@@ -1,5 +1,6 @@
-// Test class for PathOfDestruction.
+// Tester class for PathOfDestruction.
 // Written by Tiger Sachse.
+
 // To use, compile and run your program like this:
 //     javac PathOfDestruction.java PathOfDestructionTester.java
 //     java PathOfDestructionTester
@@ -9,10 +10,9 @@ import java.util.*;
 // Test class for PathOfDestruction.
 public class PathOfDestructionTester {
  
-    // Counts for passed and failed tests.
+    private static final int TESTS = 8;
     private static int passed = 0;
     private static int failed = 0;
-    private static final int TESTS = 8;
 
     // Print a failure message and increment the failed counter.
     private static void fail(String message) {

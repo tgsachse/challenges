@@ -1,10 +1,10 @@
 # Test launcher for PathOfDestruction.
-# To use this script, execute the following command:
-#     bash Test.sh
-
 # You will need to make sure your directory looks like
 # the directory described in the PDF, section 6.
 # Written by Tiger Sachse.
+
+# To use this script, execute the following command:
+#     bash Test.sh
 
 MAX_INPUTS=8
 MALFUNCTION=false
