@@ -16,7 +16,6 @@ function testGradeScript {
     cp ../Solutions/$ASSIGNMENT.java GradeSuite/${ASSIGNMENT}-25.java
     cd GradeSuite/
     ./Grade.sh
-    ./Grade.sh --use-old
     ./Grade.sh --clean
 }
 

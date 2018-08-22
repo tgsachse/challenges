@@ -8,7 +8,7 @@ public class BabylonianSortGrader {
 
     private static int passed = 0;
     private static int failed = 0;
-    private static final int INPUTS = 1;
+    private static final int INPUTS = 10;
 
     // Print a failure message and increment the failed counter.
     private static void fail(String message) {
