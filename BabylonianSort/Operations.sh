@@ -39,7 +39,7 @@ function zipAssignment {
 
 # Generate a new number list for input.
 function generateInput {
-    python3 GenerateNumberList.py
+    python3 GenerateNumberList.py $1 $2
 }
 
 # Sort a given input.
@@ -49,6 +49,14 @@ function sortInput {
     java ${ASSIGNMENT}Driver $1
     rm $ASSIGNMENT.java
     rm *.class
+}
+
+# Create a new input and create it's sorted output.
+function generateCase {
+    generateInput $1 $2
+    mv "output.txt" "Input.txt"
+    sortInput "Input.txt"
+    mv "output.txt" "Output.txt"
 }
 
 # Read the arguments and act accordingly.
@@ -62,8 +70,11 @@ case $1 in
     "--zip")
         zipAssignment $2
         ;;
-    "--gen")
-        generateInput
+    "--gen-input")
+        generateInput $2 $3
+        ;;
+    "--gen-case")
+        generateCase $2 $3
         ;;
     "--sort")
         sortInput $2

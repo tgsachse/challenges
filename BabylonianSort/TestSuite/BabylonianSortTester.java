@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.*;
 
+// Class that provides tests for BabylonianSort.
 public class BabylonianSortTester {
 
     private static int passed = 0;

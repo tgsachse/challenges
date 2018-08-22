@@ -3,12 +3,14 @@
 # Written by Tiger Sachse.
 
 import random
+from sys import argv as ARGS
 
-NUMBER_COUNT = 100
-NUMBER_WIDTH = 30
+OUTPUT = "output.txt"
+NUMBER_WIDTH = int(ARGS[1])
+NUMBER_COUNT = int(ARGS[2])
 VALID_CHARACTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX"
 
-with open("output.txt", "w") as f:
+with open(OUTPUT, "w") as f:
     f.write(str(NUMBER_COUNT) + "\n")
 
     # Create and write a number to the file, NUMBER_COUNT times.

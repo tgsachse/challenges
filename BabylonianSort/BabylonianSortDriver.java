@@ -26,7 +26,7 @@ class BabylonianSortDriver {
         // Write the array to the output file.
         BufferedWriter writer = new BufferedWriter(new FileWriter(OUTPUT));
         for (int index = 0; index < numbers.length; index++) {
-            writer.write(numbers[index]); 
+            writer.write(numbers[index]);
             writer.newLine();
         }
 
