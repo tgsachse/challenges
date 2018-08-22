@@ -4,11 +4,12 @@
 
 import random
 
-NUMBER_COUNT = 50000
-NUMBER_WIDTH = 10
+NUMBER_COUNT = 10
+NUMBER_WIDTH = 15
 VALID_CHARACTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX"
 
 with open("output.txt", "w") as f:
+    f.write(str(NUMBER_COUNT) + "\n")
 
     # Create and write a number to the file, NUMBER_COUNT times.
     for iteration in range(NUMBER_COUNT):

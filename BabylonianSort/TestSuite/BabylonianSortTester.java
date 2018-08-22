@@ -12,6 +12,7 @@ public class BabylonianSortTester {
 
     private static int passed = 0;
     private static int failed = 0;
+    private static final int INPUTS = 3;
 
     // Print a failure message and increment the failed counter.
     private static void fail(String message) {
@@ -164,9 +165,13 @@ public class BabylonianSortTester {
         }
     }
 
+    // Test that a number of inputs can be sorted properly.
     private static void testBabylonianSort() throws IOException {
-        for (int test = 1; test <= 1; test++) {
-            Scanner inScanner = new Scanner(new File(String.format("Inputs/Input%d.txt", test)));
+        for (int input = 1; input <= INPUTS; input++) {
+            Scanner inScanner = new Scanner(new File(String.format("Inputs/Input%d.txt", input)));
+
+            // The first integer of each input file is the number of strings
+            // in the file.
             String[] numbers = new String[inScanner.nextInt()];
 
             inScanner.nextLine();
@@ -174,7 +179,9 @@ public class BabylonianSortTester {
                 numbers[index] = inScanner.nextLine();
             }
 
-            String message = String.format("babylonianSort(Inputs/Input%d.txt)", test);
+            String message = String.format("babylonianSort(Inputs/Input%d.txt)", input);
+
+            // Attempt to sort the array of numbers.
             try {
                 BabylonianSort.babylonianSort(numbers);
             }
@@ -183,13 +190,18 @@ public class BabylonianSortTester {
             }
 
             boolean successful = true;
-            Scanner outScanner = new Scanner(new File(String.format("Outputs/Output%d.txt", test)));
+            Scanner outScanner = new Scanner(new File(String.format("Outputs/Output%d.txt", input)));
+            // Compare the numbers array to the expected output file. The output
+            // file will list the numbers in order.
             for (int index = 0; index < numbers.length; index++) {
                 if (!numbers[index].equals(outScanner.nextLine())) {
                     fail(message + " **output mismatch**");
                     successful = false;
+                    break;
                 } 
             }
+
+            // If all numbers matched, then pass the case.
             if (successful) {
                 pass(message);
             }
