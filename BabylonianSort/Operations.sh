@@ -42,6 +42,7 @@ function generateInput {
     python3 GenerateNumberList.py
 }
 
+# Sort a given input.
 function sortInput {
     cp ../Solutions/$ASSIGNMENT.java .
     javac $ASSIGNMENT.java ${ASSIGNMENT}Driver.java
