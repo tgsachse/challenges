@@ -106,7 +106,7 @@ public class BabylonianSortTester {
 
         try {
             BabylonianSort.sexagesimalToDecimal("12aZ");
-            fail(message + " **error expected**");
+            fail(message + " **exception expected**");
         }
 
         // This will catch the expected NumberFormatException and pass the case.
@@ -114,7 +114,7 @@ public class BabylonianSortTester {
             pass(message);
         }
         catch (Exception e) {
-            fail(message + " **error expected**");
+            fail(message + " **wrong exception**");
         }
     }
 

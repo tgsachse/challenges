@@ -28,7 +28,7 @@ fi
 
 # Print the header for the report.
 printf "Report for $ASSIGNMENT\n" | tee -a $REPORT
-printf "==================================\n\n" | tee -a $REPORT
+printf "=========================================================\n\n" | tee -a $REPORT
 
 # Check that the submission is named correctly. This bit of the script
 # also accepts files with "-[number]" at the end of the stem. Webcourses

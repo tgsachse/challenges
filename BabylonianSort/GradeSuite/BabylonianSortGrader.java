@@ -4,11 +4,13 @@
 import java.io.*;
 import java.util.*;
 
+// Provides grading criteria for BabylonianSort.
 public class BabylonianSortGrader {
 
     private static int passed = 0;
     private static int failed = 0;
-    private static final int INPUTS = 10;
+    private static final int VALID_INPUTS = 10;
+    private static final int INVALID_INPUTS = 5;
 
     // Print a failure message and increment the failed counter.
     private static void fail(String message) {
@@ -33,21 +35,28 @@ public class BabylonianSortGrader {
         System.out.printf("Final score: %.2f/100.0\n", score);        
     }
 
+    // Get an array of numbers saved in a file.
+    private static String[] getNumbers(String file) throws IOException {
+        Scanner scanner = new Scanner(new File(file));
+
+        // The first integer of each input file is the number of strings
+        // in the file.
+        String[] numbers = new String[scanner.nextInt()];
+
+        scanner.nextLine();
+        for (int index = 0; index < numbers.length; index++) {
+            numbers[index] = scanner.nextLine();
+        }
+
+        scanner.close();
+        
+        return numbers;
+    }
+
+    // Test BabylonianSort with several inputs.
     private static void testBabylonianSort() throws IOException {
-        for (int input = 1; input <= INPUTS; input++) {
-            Scanner scanner = new Scanner(new File(String.format("Inputs/Input%d.txt", input)));
-
-            // The first integer of each input file is the number of strings
-            // in the file.
-            String[] numbers = new String[scanner.nextInt()];
-
-            scanner.nextLine();
-            for (int index = 0; index < numbers.length; index++) {
-                numbers[index] = scanner.nextLine();
-            }
-
-            scanner.close();
-
+        for (int input = 1; input <= VALID_INPUTS; input++) {
+            String[] numbers = getNumbers(String.format("Inputs/Input%d.txt", input));
             String message = String.format("babylonianSort(Inputs/Input%d.txt)", input);
 
             // Attempt to sort the array of numbers.
@@ -59,7 +68,7 @@ public class BabylonianSortGrader {
             }
 
             boolean successful = true;
-            scanner = new Scanner(new File(String.format("Outputs/Output%d.txt", input)));
+            Scanner scanner = new Scanner(new File(String.format("Outputs/Output%d.txt", input)));
 
             // Compare the numbers array to the expected output file. The output
             // file will list the numbers in order.
@@ -78,8 +87,27 @@ public class BabylonianSortGrader {
 
             scanner.close();
         }
+
+        // The inputs towards the end all have a problem that should result in
+        // an exception being thrown.
+        for (int input = VALID_INPUTS + 1; input <= INVALID_INPUTS + VALID_INPUTS; input++) {
+            String[] numbers = getNumbers(String.format("Inputs/Input%d.txt", input));
+            String message = String.format("babylonianSort(Inputs/Input%d.txt)", input);
+
+            try {
+                BabylonianSort.babylonianSort(numbers);
+                fail(message + " **exception expected**");
+            }
+            catch (NumberFormatException e) {
+                pass(message);
+            }
+            catch (Exception e) {
+                fail(message + " **wrong exception**");
+            }
+        }
     }
 
+    // Main entry point for the grader.
     public static void main(String[] args) throws IOException {
         testBabylonianSort(); 
         endReport();
