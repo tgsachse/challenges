@@ -33,7 +33,7 @@ public class BabylonianSortTester {
     private static void printFinalReport() {
         System.out.printf("\nTests passed: %d\n", passed);
         System.out.printf("Tests failed: %d\n", failed);
-        System.out.println("=========================================================\n");
+        System.out.println("==========================================================\n");
 
         if (failed == 0) {
             System.out.println("Congratulations! You are passing all test cases.");
@@ -218,7 +218,7 @@ public class BabylonianSortTester {
     // Main entry point of the test class.
     public static void main(String[] args) throws IOException {
         System.out.println("Results:");
-        System.out.println("=========================================================");
+        System.out.println("==========================================================");
 
         testDecimalToSexagesimal();
         testSexagesimalToDecimal();

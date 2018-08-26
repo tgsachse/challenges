@@ -31,7 +31,7 @@ function zipAssignment {
         zip ${ASSIGNMENT}Assignment.zip $ASSIGNMENT.pdf TestSuite/* TestSuite/Inputs/*
     elif [ "$1" == "grader" ]
     then
-        zip ${ASSIGNMENT}GradeSuite.zip $ASSIGNMENT.pdf GradeSuite/* GradeSuite/Inputs/*
+        zip ${ASSIGNMENT}GradeSuite.zip $ASSIGNMENT.pdf GradeSuite/* GradeSuite/Inputs/* GradeSuite/Outputs/*
     fi
     rm $ASSIGNMENT.pdf
 }

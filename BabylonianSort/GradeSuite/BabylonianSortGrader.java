@@ -3,6 +3,7 @@
 
 import java.io.*;
 import java.util.*;
+import java.util.Map.*;
 
 // Provides grading criteria for BabylonianSort.
 public class BabylonianSortGrader {
@@ -51,6 +52,142 @@ public class BabylonianSortGrader {
         scanner.close();
         
         return numbers;
+    }
+
+    // Test conversion of decimal longs to sexagesimal strings.
+    private static void testDecimalToSexagesimal() {
+        HashMap<Integer, String> tests = new HashMap<>();
+        tests.put(0, "0");
+        tests.put(9, "9");
+        tests.put(40, "E");
+        tests.put(2766, "K6");
+        tests.put(213480, "Xi0");
+
+        for (Entry<Integer, String> test : tests.entrySet()) {
+            String result = BabylonianSort.decimalToSexagesimal(test.getKey());
+            String message = String.format("decimalToSexagesimal(%d)", test.getKey());
+            
+            try {
+                if (result.equals(test.getValue())) {
+                    pass(message);
+                }
+                else {
+                    fail(message + " **output mismatch**");
+                }
+            }
+            catch (Exception e) {
+                fail(message + " **program crashed**");
+            }
+        }
+    }
+
+    // Test conversion of sexagesimal strings to decimal longs.
+    private static void testSexagesimalToDecimal() {
+        HashMap<String, Integer> tests = new HashMap<>();
+        tests.put("0", 0);
+        tests.put("9", 9);
+        tests.put("E", 40);
+        tests.put("K6", 2766);
+        tests.put("Xi0", 213480);
+
+        for (Entry<String, Integer> test : tests.entrySet()) {
+            long result = BabylonianSort.sexagesimalToDecimal(test.getKey());
+            String message = String.format("sexagesimalToDecimal(\"%s\")", test.getKey());
+
+            try {
+                if (result == test.getValue()) {
+                    pass(message);
+                }
+                else {
+                    fail(message + " **output mismatch**");
+                }
+            }
+            catch (Exception e) {
+                fail(message + " **program crashed**");
+            }
+        }
+    }
+
+    // Test that the proper error is thrown when given an invalid sexagesimal string.
+    private static void testInvalidSexagesimalToDecimal() {
+        String message = String.format("sexagesimalToDecimal(\"xyY\")");
+        try {
+            BabylonianSort.sexagesimalToDecimal("xyY");
+            fail(message + " **exception expected**");
+        }
+
+        // This will catch the expected NumberFormatException and pass the case.
+        catch (NumberFormatException e) {
+            pass(message);
+        }
+        catch (Exception e) {
+            fail(message + " **wrong exception**");
+        }
+        
+        message = String.format("sexagesimalToDecimal(\"aaaaaaaaaaah\")");
+        try {
+            BabylonianSort.sexagesimalToDecimal("aaaaaaaaaaah");
+            fail(message + " **exception expected**");
+        }
+
+        // This will catch the expected ArithmeticException and pass the case.
+        catch (ArithmeticException e) {
+            pass(message);
+        }
+        catch (Exception e) {
+            fail(message + " **wrong exception**");
+        }
+    }
+
+    // Test that the submission recognizes valid sexagesimal strings.
+    private static void testValidSexagesimalNumbers() {
+        String[] validNumbers = {
+            "1",
+            "68i",
+            "00000",
+            "att75",
+            "yyghIIItjfk223kGGjk",
+        };
+
+        for (String number : validNumbers) {
+            String message = String.format("isValidSexagesimalNumber(\"%s\")", number);
+            try {
+                if (BabylonianSort.isValidSexagesimalNumber(number)) {
+                    pass(message);
+                }
+                else {
+                    fail(message + " **output mismatch**");
+                }
+            }
+            catch (Exception e) {
+                fail(message + " **program crashed**");
+            }
+        }
+    }
+
+    // Test that the submission recognizes invalid sexagesimal strings.
+    private static void testInvalidSexagesimalNumbers() {
+        String[] invalidNumbers = {
+            "-1000",
+            "~~~88*",
+            "AAaaY77",
+            "abcdefghijklmnopZ"
+        };
+   
+        for (String number : invalidNumbers) {
+            String message = String.format("isValidSexagesimalNumber(\"%s\")", number);
+            try {
+                if (!BabylonianSort.isValidSexagesimalNumber(number)) {
+                    pass(message);
+                }
+                else {
+                    fail(message + " **output mismatch**");
+                }
+            }
+            catch (Exception e) {
+                fail(message + " **program crashed**");
+            }
+        }
     }
 
     // Test BabylonianSort with several inputs.
@@ -109,7 +246,13 @@ public class BabylonianSortGrader {
 
     // Main entry point for the grader.
     public static void main(String[] args) throws IOException {
+        testDecimalToSexagesimal();
+        testSexagesimalToDecimal();
+        testInvalidSexagesimalToDecimal();
+        testValidSexagesimalNumbers();
+        testInvalidSexagesimalNumbers();
         testBabylonianSort(); 
+
         endReport();
     }
 }
