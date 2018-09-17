@@ -1,82 +1,102 @@
-# Automatically grade an assignment submission.
-
-# This script will produce a grade report with the scores for each
-# test case, as well as a final score, out of 100. It will also
-# display these results to the screen.
-
+# Automatically grade all assignment submissions.
 # Written by Tiger Sachse.
 
-REPORT="report.txt"
-ASSIGNMENT="PathOfDestruction"
+FAILED_DIR="Failed"
+RESULTS_DIR="Results"
+SUBMIT_DIR="Submissions"
+SUBMIT_ZIP="submissions.zip"
+ASSIGNMENT_NAME="PathOfDestruction"
 
-# If the user wants to clean up left over garbage, do so and exit.
-if [ "$1" == "--clean" ]
-then
-    rm "$ASSIGNMENT-old.java"
-    rm *.class 1>/dev/null 2>&1
-    rm $REPORT 1>/dev/null 2>&1
-    exit
-fi
+SUBMIT_STEM_PATTERN="^$SUBMIT_DIR/"
+CATCHALL_PATTERN="[a-z]+_[0-9]+_[0-9]+_.*\.java"
+SUBMIT_PATTERN="[a-z]+_[0-9]+_[0-9]+_$ASSIGNMENT_NAME(\-[0-9]+)?\.java$"
 
-# Delete old reports.
-rm $REPORT 1>/dev/null 2>&1
+function grade_submission {
+    SUBMIT_FILE=$1
+    SUBMIT_NAME=$(echo $SUBMIT_FILE | egrep -o $CATCHALL_PATTERN)
+    REPORT_NAME="$RESULTS_DIR/$SUBMIT_NAME"
 
-# If the grader wants to use a previously-graded submission, then
-# rename that old submission to the correct name.
-if [ "$1" == "--use-old" ]
-then
-    mv "$ASSIGNMENT-old.java" "$ASSIGNMENT.java"
-fi
+    printf "Grading: %s\n" $SUBMIT_NAME
 
-# Print the header for the report.
-printf "Report for $ASSIGNMENT\n" | tee -a $REPORT
-printf "==================================\n\n" | tee -a $REPORT
+    # Prepend a header to the report file.
+    printf "Report for $ASSIGNMENT_NAME\n" > $REPORT_NAME
+    printf "==================================\n\n" >> $REPORT_NAME
 
-# Check that the submission is named correctly. This bit of the script
-# also accepts files with "-[number]" at the end of the stem. Webcourses
-# adds these numbers to files that have been resubmitted as a way to
-# track the current version of the submission.
-SUBMISSION_NAME=$(ls | egrep "$ASSIGNMENT(\-[0-9]+)?.java")
-if [ $? != 0 ]
-then
-    printf "Submission not named correctly.\n" | tee -a $REPORT
-    printf "\nFinal score: 0.0/100.0\n" | tee -a $REPORT
-    exit
-fi
+    # Check the submission path name against a valid naming pattern. If the
+    # submission is not named correctly, the submission fails.
+    echo $SUBMIT_FILE | egrep $SUBMIT_STEM_PATTERN$SUBMIT_PATTERN &> /dev/null
+    if [ $? != 0 ]
+    then
+        printf "Submission not named correctly.\n" >> $REPORT_NAME
+        printf "\nFinal score: 0.0/100.0\n" >> $REPORT_NAME
+        cp $SUBMIT_FILE $FAILED_DIR/$SUBMIT_NAME
+        continue
+    fi
 
-# If there are multiple files in the directory that begin with the correct
-# assignment stem, than the script cannot know which is the intended file
-# and it must exit.
-SUBMISSION_COUNT=$(ls | egrep "$ASSIGNMENT(\-[0-9]+)?.java" -c)
-if [ $SUBMISSION_COUNT != "1" ]
-then
-    printf "ERROR: Too many files with names starting with \"$ASSIGNMENT\".\n"
-    printf "       I don't know how to proceed! Please remove excess files.\n"
-    rm $REPORT
-    exit
-fi
+    # Clean up the working space.
+    rm -f *.class $ASSIGNMENT_NAME.java
 
-# Rename the submission so that it has the correct name. Any
-# submissions at this point in the script will only be off by the
-# aforementioned "-[number]".
-if [ $SUBMISSION_NAME != "$ASSIGNMENT.java" ]
-then
-    mv $SUBMISSION_NAME "$ASSIGNMENT.java"
-fi
+    # Copy the submission into the working directory for testing.
+    cp $SUBMIT_FILE $ASSIGNMENT_NAME.java
 
-# Attempt to compile the submission.
-javac $ASSIGNMENT.java ${ASSIGNMENT}Grader.java 1>/dev/null 2>&1
-if [ $? != 0 ]
-then
-    printf "Submission failed to compile.\n" | tee -a $REPORT
-    printf "Final score: 0.0/100.0\n" | tee -a $REPORT
-else
-    java -Xss128M "${ASSIGNMENT}Grader" | tee -a $REPORT
-fi
+    # Compile the submission. If compilation fails, the submission fails. Otherwise,
+    # run the Grader program.
+    javac $ASSIGNMENT_NAME.java ${ASSIGNMENT_NAME}Grader.java &> /dev/null
+    if [ $? != 0 ]
+    then
+        printf "Submission failed to compile.\n" >> $REPORT_NAME
+        printf "Final score: 0.0/100.0\n" >> $REPORT_NAME
+        cp $SUBMIT_FILE $FAILED_DIR/$SUBMIT_NAME
+    else
+        java -Xss512M "${ASSIGNMENT_NAME}Grader" $REPORT_NAME
+    fi
 
-# Clean up any mess.
-rm *.class 1>/dev/null 2>&1
+    # Clean up after yourself!
+    rm -f *.class $ASSIGNMENT_NAME.java
+}
 
-# Get the tested submission out of the way, but preserve it for
-# easy access if a mistake was made.
-mv "$ASSIGNMENT.java" "$ASSIGNMENT-old.java"
+function clean {
+    rm -rf $RESULTS_DIR $FAILED_DIR $SUBMIT_DIR
+    rm -f *.class $ASSIGNMENT_NAME.java
+}
+
+function prep {
+    clean
+
+    # Make necessary directories and unzip the submissions.
+    mkdir $RESULTS_DIR $FAILED_DIR &> /dev/null
+    unzip -qq $SUBMIT_ZIP -d $SUBMIT_DIR
+}
+
+case $1
+in
+    # Prepare the submissions zip for grading.
+    "--prep")
+        prep
+        ;;
+
+    # Clean up a messy working directory.
+    "--clean")
+        clean
+        ;;
+
+    # Grade a single submission.
+    "--single")
+        mkdir $RESULTS_DIR &> /dev/null
+        grade_submission $2
+        ;;
+    
+    # Grade all the submissions.
+    *)
+        prep
+
+        # Go through and grade every submission.
+        for SUBMIT_FILE in $SUBMIT_DIR/*
+        do
+            grade_submission $SUBMIT_FILE
+        done
+
+        # Remove the unzipped submissions.
+        rm -r $SUBMIT_DIR
+        ;;
+esac

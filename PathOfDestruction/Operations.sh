@@ -23,6 +23,7 @@ function testGradeScript {
 # Zip the test suite and PDF for students or graders.
 function zipAssignment {
     cd Documentation
+    rm $ASSIGNMENT.pdf
     libreoffice --headless --convert-to pdf $ASSIGNMENT.odt
     cp $ASSIGNMENT.pdf ..
     cd ..
