@@ -9,6 +9,7 @@ import java.util.concurrent.*;
 public class PathOfDestructionGrader {
     private static final int TESTS = 11;
     private static final int TIMEOUT = 30;
+
     private static GradeRecorder recorder;
 
     // Run all tests for a given method.
@@ -47,7 +48,8 @@ public class PathOfDestructionGrader {
 
     // Entry point of the grading program.
     public static void main(String[] args) {
-      
+     
+        // Set up the grade recorder using the first argument to the program.
         try {
             recorder = new GradeRecorder(args[0]);
         }
@@ -109,7 +111,12 @@ class TimeableCall implements Callable<Void> {
     @Override
     public Void call() throws Exception {
         if (method.equals("isValidBoard")) {
-            if (PathOfDestruction.isValidBoard(input) == validItems.contains(testNumber)) {
+            boolean result = PathOfDestruction.isValidBoard(input);
+            if (Thread.currentThread().isInterrupted()) {
+                return null;
+            }
+
+            if (result == validItems.contains(testNumber)) {
                 recorder.pass(message);
             }
             else {
@@ -117,7 +124,12 @@ class TimeableCall implements Callable<Void> {
             }
         }
         else if (method.equals("hasPathOfDestruction")) {
-            if (PathOfDestruction.hasPathOfDestruction(input) == validItems.contains(testNumber)) {
+            boolean result = PathOfDestruction.hasPathOfDestruction(input);
+            if (Thread.currentThread().isInterrupted()) {
+                return null;
+            }
+
+            if (result == validItems.contains(testNumber)) {
                 recorder.pass(message);
             }
             else {
@@ -128,11 +140,12 @@ class TimeableCall implements Callable<Void> {
     }
 }
 
-//
+// Record grades into a provided report file.
 class GradeRecorder extends BufferedWriter {
     private int passed;
     private int failed;
 
+    // Constructor that initializes test counts and opens the file.
     public GradeRecorder(String filename) throws IOException {
         super(new FileWriter(filename, true));
         passed = 0;
@@ -165,13 +178,14 @@ class GradeRecorder extends BufferedWriter {
         }
     }
 
+    // Print the final report footer.
     public void printFinalReport() {
         try {
+            long score = Math.round((100.0 * passed) / (passed + failed));
+
             write(String.format("\nTests passed: %d\n", passed));
             write(String.format("Tests failed: %d\n", failed));
-
-            double score = (100.0 * passed) / (passed + failed);
-            write(String.format("Final score: %.2f/100.0\n", score));
+            write(String.format("Final score: %d/100\n", score));
             flush();
         }
         catch (IOException exception) {

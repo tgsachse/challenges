@@ -1,4 +1,6 @@
 # Automatically grade all assignment submissions.
+# This script is tuned to grade Webcourses submissions. The submission
+# pattern accepts file names in the format returned from Webcourses.
 # Written by Tiger Sachse.
 
 FAILED_DIR="Failed"
@@ -6,11 +8,10 @@ RESULTS_DIR="Results"
 SUBMIT_DIR="Submissions"
 SUBMIT_ZIP="submissions.zip"
 ASSIGNMENT_NAME="PathOfDestruction"
-
-SUBMIT_STEM_PATTERN="^$SUBMIT_DIR/"
-CATCHALL_PATTERN="[a-z]+_[0-9]+_[0-9]+_.*\.java"
+CATCHALL_PATTERN="[a-z]+_[0-9]+_[0-9]+_.*\.java$"
 SUBMIT_PATTERN="[a-z]+_[0-9]+_[0-9]+_$ASSIGNMENT_NAME(\-[0-9]+)?\.java$"
 
+# Grade a a submission.
 function grade_submission {
     SUBMIT_FILE=$1
     SUBMIT_NAME=$(echo $SUBMIT_FILE | egrep -o $CATCHALL_PATTERN)
@@ -24,13 +25,13 @@ function grade_submission {
 
     # Check the submission path name against a valid naming pattern. If the
     # submission is not named correctly, the submission fails.
-    echo $SUBMIT_FILE | egrep $SUBMIT_STEM_PATTERN$SUBMIT_PATTERN &> /dev/null
+    echo $SUBMIT_FILE | egrep $SUBMIT_PATTERN &> /dev/null
     if [ $? != 0 ]
     then
         printf "Submission not named correctly.\n" >> $REPORT_NAME
         printf "\nFinal score: 0.0/100.0\n" >> $REPORT_NAME
         cp $SUBMIT_FILE $FAILED_DIR/$SUBMIT_NAME
-        continue
+        return
     fi
 
     # Clean up the working space.
@@ -55,19 +56,23 @@ function grade_submission {
     rm -f *.class $ASSIGNMENT_NAME.java
 }
 
+# Clean up the working directory.
 function clean {
     rm -rf $RESULTS_DIR $FAILED_DIR $SUBMIT_DIR
     rm -f *.class $ASSIGNMENT_NAME.java
 }
 
+# Prepare the working directory for grading.
 function prep {
-    clean
+    rm -rf $SUBMIT_DIR
+    rm -f *.class $ASSIGNMENT_NAME.java
 
     # Make necessary directories and unzip the submissions.
     mkdir $RESULTS_DIR $FAILED_DIR &> /dev/null
     unzip -qq $SUBMIT_ZIP -d $SUBMIT_DIR
 }
 
+# Entry point of the script.
 case $1
 in
     # Prepare the submissions zip for grading.
