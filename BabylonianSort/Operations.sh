@@ -22,13 +22,14 @@ function testGradeScript {
 # Zip the test suite and PDF for students or graders.
 function zipAssignment {
     cd Documentation
+    rm $ASSIGNMENT.pdf
     libreoffice --headless --convert-to pdf $ASSIGNMENT.odt
     cp $ASSIGNMENT.pdf ..
     cd ..
 
     if [ "$1" == "student" ]
     then
-        zip ${ASSIGNMENT}Assignment.zip $ASSIGNMENT.pdf TestSuite/* TestSuite/Inputs/*
+        zip ${ASSIGNMENT}Assignment.zip $ASSIGNMENT.pdf TestSuite/* TestSuite/Inputs/* TestSuite/Outputs/*
     elif [ "$1" == "grader" ]
     then
         zip ${ASSIGNMENT}GradeSuite.zip $ASSIGNMENT.pdf GradeSuite/* GradeSuite/Inputs/* GradeSuite/Outputs/*

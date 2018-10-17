@@ -5,7 +5,7 @@
 # You will need to make sure your directory looks like
 # the directory described in the PDF, section 6.
 
-MAX_INPUTS=0
+MAX_INPUTS=5
 MALFUNCTION=false
 INPUT_NUMBERS=$(seq $MAX_INPUTS)
 

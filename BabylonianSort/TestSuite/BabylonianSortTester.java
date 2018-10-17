@@ -122,9 +122,9 @@ public class BabylonianSortTester {
     private static void testValidSexagesimalNumbers() {
         String[] validNumbers = {
             "17bbxX",
-            "0000",
             "8ayT",
             "2",
+            "0",
         };
 
         for (String number : validNumbers) {
