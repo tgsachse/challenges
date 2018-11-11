@@ -13,10 +13,13 @@ function testTestScript {
 
 # Test the grading script.
 function testGradeScript {
-    cp ../Solutions/$ASSIGNMENT.java GradeSuite/${ASSIGNMENT}-25.java
+    cp ../Solutions/$ASSIGNMENT.java GradeSuite/ts_1_1_${ASSIGNMENT}-1.java
     cd GradeSuite/
-    ./Grade.sh
+    ./Grade.sh --single ts_1_1_${ASSIGNMENT}-1.java
+    echo ""
+    cat Results/ts_1_1_${ASSIGNMENT}-1.java
     ./Grade.sh --clean
+    rm ts_1_1_${ASSIGNMENT}-1.java
 }
 
 # Zip the test suite and PDF for students or graders.

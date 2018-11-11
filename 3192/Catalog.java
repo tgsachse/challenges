@@ -18,7 +18,7 @@ public class Catalog implements Iterable<CatalogEntry> {
     }
 
 
-    // TESTING MAIN
+    // TESTING MAIN (will remove)
     public static void main(String[] args) {
         Satellite C1 = new Satellite("C1", Satellite.Type.C, .65);
         Satellite B1 = new Satellite("B1", Satellite.Type.B, .95);

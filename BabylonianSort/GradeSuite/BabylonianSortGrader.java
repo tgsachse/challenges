@@ -64,10 +64,11 @@ public class BabylonianSortGrader {
         tests.put(213480, "Xi0");
 
         for (Entry<Integer, String> test : tests.entrySet()) {
-            String result = BabylonianSort.decimalToSexagesimal(test.getKey());
             String message = String.format("decimalToSexagesimal(%d)", test.getKey());
             
             try {
+                String result = BabylonianSort.decimalToSexagesimal(test.getKey());
+                
                 if (result.equals(test.getValue())) {
                     pass(message);
                 }
@@ -91,10 +92,11 @@ public class BabylonianSortGrader {
         tests.put("Xi0", 213480);
 
         for (Entry<String, Integer> test : tests.entrySet()) {
-            long result = BabylonianSort.sexagesimalToDecimal(test.getKey());
             String message = String.format("sexagesimalToDecimal(\"%s\")", test.getKey());
 
             try {
+                long result = BabylonianSort.sexagesimalToDecimal(test.getKey());
+                
                 if (result == test.getValue()) {
                     pass(message);
                 }
@@ -202,6 +204,7 @@ public class BabylonianSortGrader {
             }
             catch (Exception e) {
                 fail(message + " **program crashed**");
+                continue;
             }
 
             boolean successful = true;
