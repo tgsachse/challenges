@@ -31,37 +31,50 @@ public class OrchardStrollTester {
         System.out.println("Results:");
         System.out.println("=========================================================");
       
-        String messageFormat = "determineLargestHaul(%d)%s"; // Change this.
+        String messageFormat = "determineLargestHaul() %s %d%s";
         HashMap<Tree[], Integer> tests = new HashMap<>();
 
         // Insert some tests into the tests hashmap.
         tests.put(
             new Tree[] {
-                new Tree(Tree.Fruit.APPLE, 1),
-                new Tree(Tree.Fruit.BANANA, 2),
-                new Tree(Tree.Fruit.CHERRY, 7),
-                new Tree(Tree.Fruit.CHERRY, 7),
+                new Tree(Tree.Fruit.APPLE, 2),
+                new Tree(Tree.Fruit.BANANA, 4),
                 new Tree(Tree.Fruit.CHERRY, 6),
-                new Tree(Tree.Fruit.CHERRY, 5),
-                new Tree(Tree.Fruit.CHERRY, 9),
-                new Tree(Tree.Fruit.CHERRY, 7),
-                new Tree(Tree.Fruit.APPLE, 200)
+                new Tree(Tree.Fruit.BANANA, 3),
+                new Tree(Tree.Fruit.BANANA, 3),
+                new Tree(Tree.Fruit.BANANA, 3),
+                new Tree(Tree.Fruit.BANANA, 3),
+                new Tree(Tree.Fruit.APPLE, 10)
             },
-            242
+            28
         );
 
         // For each test in the hashmap, run the test.
         for (Map.Entry<Tree[], Integer> test : tests.entrySet()) { 
             try {
                 if (OrchardStroll.determineLargestHaul(test.getKey()) == test.getValue()) {
-                    pass(String.format(messageFormat, test.getValue(), ""));
+                    pass(String.format(messageFormat, "=", test.getValue(), ""));
                 }
                 else {
-                    fail(String.format(messageFormat, test.getValue(), " **output mismatch**"));
+                    fail(
+                        String.format(
+                            messageFormat,
+                            "!=",
+                            test.getValue(),
+                            " **output mismatch**"
+                        )
+                    );
                 }
             }
             catch (Exception exception) {
-                fail(String.format(messageFormat, test.getValue(), " **program crashed**"));
+                fail(
+                    String.format(
+                        messageFormat,
+                        "!=",
+                        test.getValue(),
+                        " **program crashed**"
+                    )
+                );
             }
         }
        
