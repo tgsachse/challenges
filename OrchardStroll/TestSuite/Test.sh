@@ -1,6 +1,6 @@
 # Test launcher for OrchardStroll.
 # You will need to make sure your directory looks like
-# the directory described in the PDF, section 6.
+# the directory described in the PDF, section 7.
 # Written by Tiger Sachse.
 
 # To use this script, execute the following command:

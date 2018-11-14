@@ -48,6 +48,56 @@ public class OrchardStrollTester {
             },
             28
         );
+        tests.put(
+            new Tree[] {
+                new Tree(Tree.Fruit.ORANGE, 10),
+                new Tree(Tree.Fruit.TOMATO, 20),
+                new Tree(Tree.Fruit.PEAR, 3)
+            },
+            30
+        );
+        tests.put(
+            new Tree[] {
+                new Tree(Tree.Fruit.LIME, 9),
+                new Tree(Tree.Fruit.MANGO, 6),
+                new Tree(Tree.Fruit.APPLE, 5),
+                new Tree(Tree.Fruit.TOMATO, 10),
+                new Tree(Tree.Fruit.WATERMELON, 12),
+                new Tree(Tree.Fruit.STRAWBERRY, 19),
+                new Tree(Tree.Fruit.ORANGE, 6)
+            },
+            31
+        );
+        tests.put(
+            new Tree[] {
+                new Tree(Tree.Fruit.PEAR, 6),
+                new Tree(Tree.Fruit.PEAR, 5),
+                new Tree(Tree.Fruit.PEAR, 3),
+                new Tree(Tree.Fruit.PEAR, 9),
+                new Tree(Tree.Fruit.PEAR, 2),
+                new Tree(Tree.Fruit.PEAR, 8),
+                new Tree(Tree.Fruit.PEAR, 5),
+                new Tree(Tree.Fruit.PEAR, 7),
+                new Tree(Tree.Fruit.PEAR, 10),
+                new Tree(Tree.Fruit.PEAR, 12)
+            },
+            67
+        );
+        tests.put(
+            new Tree[] {
+                new Tree(Tree.Fruit.WATERMELON, 5),
+                new Tree(Tree.Fruit.WATERMELON, 8),
+                new Tree(Tree.Fruit.BANANA, 10),
+                new Tree(Tree.Fruit.ORANGE, 6),
+                new Tree(Tree.Fruit.BANANA, 7),
+                new Tree(Tree.Fruit.BANANA, 7),
+                new Tree(Tree.Fruit.ORANGE, 9),
+                new Tree(Tree.Fruit.ORANGE, 8),
+                new Tree(Tree.Fruit.ORANGE, 3),
+                new Tree(Tree.Fruit.WATERMELON, 10)
+            },
+            50
+        );
 
         // For each test in the hashmap, run the test.
         for (Map.Entry<Tree[], Integer> test : tests.entrySet()) { 
