@@ -35,7 +35,7 @@ function zipAssignment {
 
     if [ "$1" == "student" ]
     then
-        zip ${ASSIGNMENT}Assignment.zip $ASSIGNMENT.pdf TestSuite/* TestSuite/Inputs/*
+        zip ${ASSIGNMENT}Assignment.zip $ASSIGNMENT.pdf TestSuite/*
     elif [ "$1" == "grader" ]
     then
         zip ${ASSIGNMENT}GradeSuite.zip $ASSIGNMENT.pdf GradeSuite/* GradeSuite/Inputs/*

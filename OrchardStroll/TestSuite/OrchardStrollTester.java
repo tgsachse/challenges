@@ -2,7 +2,7 @@
 // Part of OrchardStroll.
 
 // To use, compile and run your program like this:
-//     javac OrchardStroll.java OrchardStrollTester.java Tree.java Basket.java
+//     javac OrchardStroll.java OrchardStrollTester.java Tree.java
 //     java OrchardStrollTester
 
 import java.util.*;
