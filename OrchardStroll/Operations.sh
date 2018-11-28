@@ -16,6 +16,7 @@ function testTestScript {
 
 # Test the grading script.
 function testGradeScript {
+    cp Provided/* GradeSuite/
     cp ../Solutions/$ASSIGNMENT.java GradeSuite/ts_1_1_${ASSIGNMENT}-1.java
     cd GradeSuite/
     ./Grade.sh --single ts_1_1_${ASSIGNMENT}-1.java
@@ -38,7 +39,7 @@ function zipAssignment {
         zip ${ASSIGNMENT}Assignment.zip $ASSIGNMENT.pdf TestSuite/*
     elif [ "$1" == "grader" ]
     then
-        zip ${ASSIGNMENT}GradeSuite.zip $ASSIGNMENT.pdf GradeSuite/* GradeSuite/Inputs/*
+        zip ${ASSIGNMENT}GradeSuite.zip $ASSIGNMENT.pdf GradeSuite/*
     fi
     rm $ASSIGNMENT.pdf
 }
